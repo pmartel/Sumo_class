@@ -12,6 +12,7 @@ void setup() {
   Serial.begin(9600);
 }
 bool obstacle_mode = true;
+int duration = 50;
 void loop() {
  
   int  dist;
@@ -34,9 +35,11 @@ void loop() {
   }
   if (obstacle_mode == false){
     Left(125); 
+    duration -= 1;
     dist= Sonar.ping_cm();
     Serial.println(dist);
-    if (dist <= 30 && dist != 0){
+    if (dist <= 30 && dist != 0 || duration == 0){
+      duration = 50;
       obstacle_mode = true;
     }
   }
