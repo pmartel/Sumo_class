@@ -1,12 +1,19 @@
 #include <NewPing.h>
 
+// useful "hidden" features
+enum { LeftWheelForward = 8, LeftWheelBackwards, RightWheelForward, RightWheelBackwards};
+struct _complex {
+  float re; 
+  float im;};
+typedef  struct _complex Complex;
+
 NewPing Sonar(5,6, 60);
 void setup() {
   // put your setup code here, to run once:
   pinMode(10, OUTPUT);
   pinMode(11, OUTPUT);
   pinMode(9, OUTPUT);
-  pinMode(8, OUTPUT);
+  pinMode(LeftWheelForward, OUTPUT);
   pinMode(13, INPUT);
   pinMode(12, INPUT);
   Serial.begin(9600);
@@ -42,7 +49,7 @@ void backward(int Speed){
   analogWrite(11, Speed);
   analogWrite(10, 0);
   analogWrite(9, Speed);
-  analogWrite(8, 0);
+  analogWrite(LeftWheelForward, 0);
 }
 void forward(int Speed){
   analogWrite(11, 0);
@@ -63,4 +70,3 @@ void Stop()
   analogWrite(9, 0);
   analogWrite(8, 0);
 }
-
