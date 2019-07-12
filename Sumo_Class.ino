@@ -11,9 +11,10 @@ void setup() {
   pinMode(12, INPUT);
   Serial.begin(9600);
 }
-
+bool obstacle_mode = true;
 void loop() {
-  bool obstacle_mode = true;
+ 
+  int  dist;
   // put your main code here, to run repeatedly:
   Serial.println(Sonar.ping_cm());
   if (digitalRead(13) == HIGH && digitalRead(12) == HIGH && obstacle_mode == true){
@@ -24,17 +25,19 @@ void loop() {
     delay(1000);
     Left(255);
     delay(500);
-    if (obstacle_mode == true){
-      obstacle_mode = false;
-    }
     if (obstacle_mode == false){
-      obstacle_mode = true; 
+      obstacle_mode = true;
+    }
+    else{
+      obstacle_mode = false; 
     }
   }
   if (obstacle_mode == false){
-    Left(150);
-    if (Sonar.ping_cm() <= 30 && Sonar.ping_cm() != 0){
-      forward(255);
+    Left(125); 
+    dist= Sonar.ping_cm();
+    Serial.println(dist);
+    if (dist <= 30 && dist != 0){
+      obstacle_mode = true;
     }
   }
 }
